@@ -15,7 +15,7 @@ public class Main
     public static void main(String[] args)
     {
         Main m = new Main();
-        // m.stats();
+        //m.stats();
         String s = m.scegli();
         m.indovina(s);
     }
@@ -69,8 +69,10 @@ public class Main
         final Calendar c = Calendar.getInstance();
         final int seed = c.get(Calendar.YEAR) + c.get(Calendar.MONTH) + c.get(Calendar.DAY_OF_MONTH);
 
-        final int linea = new Random(seed).nextInt(28874); // deve corrispondere al numero di parole nel file, vedi stats
+        final int linea = new Random(seed).nextInt(7896); // deve corrispondere al numero di parole nel file, vedi stats
         InputStream is = ClassLoader.getSystemResourceAsStream(FILE);
+        if ( is == null )
+            throw new RuntimeException("Dizionario non trovato");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         return br.lines().skip(linea-1).findFirst().get();
     }
@@ -141,6 +143,9 @@ public class Main
     private boolean parolaEsisteNelFile(final String input)
     {
         InputStream is = ClassLoader.getSystemResourceAsStream(FILE);
+        if ( is == null )
+            throw new RuntimeException("Dizionario non trovato");
+
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line;
 
